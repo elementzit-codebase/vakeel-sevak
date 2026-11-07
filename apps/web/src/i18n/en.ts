@@ -1,0 +1,17 @@
+export const en = {
+  signIn: 'Sign in',
+  today: 'Today',
+  cases: 'Cases',
+  calendar: 'Calendar',
+  assistant: 'Assistant',
+  recordHearing: 'Record hearing',
+  approve: 'Approve and save',
+  clients: 'Clients',
+  tasks: 'Tasks',
+  fees: 'Fees',
+  library: 'BNS / BNSS / BSA',
+  consult: 'Consultations',
+  ask: 'Ask',
+  team: 'Team and access',
+  signOut: 'Sign out',
+};

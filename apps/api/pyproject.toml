@@ -1,0 +1,45 @@
+[project]
+name = "vakeelsevak-api"
+version = "0.1.0"
+description = "VakeelSevak backend API"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "sqlalchemy>=2.0",
+  "alembic>=1.13",
+  "psycopg[binary]>=3.2",
+  "pydantic-settings>=2.4",
+  "argon2-cffi>=23.1",
+  "pyjwt>=2.9",
+  "pyotp>=2.9",
+  "email-validator>=2.2",
+  "httpx>=0.27",
+  "pypdf>=5",
+  "reportlab>=4",
+  "openpyxl>=3.1",
+  "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.6"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+extend-exclude = ["migrations"]
+line-length = 150
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["app", "app.api", "app.services", "app.jobs"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Form", "app.api.deps.require", "app.api.deps.require_any"]

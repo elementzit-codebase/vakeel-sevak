@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: vakeelsevak
+      POSTGRES_PASSWORD: vakeelsevak
+      POSTGRES_DB: vakeelsevak
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vakeelsevak"]
+      interval: 5s
+      retries: 10
+  # Reminders and the daily clean-up. Build context is the API folder; run `make api-install` first for local use.
+  worker:
+    image: python:3.13-slim
+    working_dir: /app
+    volumes: ["./apps/api:/app"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://vakeelsevak:vakeelsevak@db:5432/vakeelsevak
+    command: sh -c "pip install -q -e . && python -m app.jobs.reminders --loop"
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: ["worker"]
+volumes:
+  pgdata:
